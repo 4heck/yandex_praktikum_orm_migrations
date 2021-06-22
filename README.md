@@ -10,8 +10,8 @@ pip install -r requirements.txt
 ### Смотрим на первую версию моделей
 - choices
 - [Meta options](https://docs.djangoproject.com/en/3.2/ref/models/options/)
-- unique_together ???
 - [кастомные менеджеры моделей](https://docs.djangoproject.com/en/3.2/topics/db/managers)
+- как устроено сохранение changelog
 
 ### Замечаем несоблюдение DRY
 - миксины для моделей
@@ -30,13 +30,14 @@ python manage.py migrate
 ```shell
 python manage.py squashmigrations trello <migration_name>
 ```
+
 ### Замечаем, что в поле estimated_time храним время в часах и пишем миграцию на хранение в минутах
 - [кастомные миграции](https://docs.djangoproject.com/en/3.2/howto/writing-migrations/)
 - [копирование объектов модели](https://docs.djangoproject.com/en/3.2/topics/db/queries/#copying-model-instances)
 - [обновление объектов](https://docs.djangoproject.com/en/3.2/topics/db/queries/#copying-model-instances) - update_queryset.py
 
 ### Замечаем, что в файле trello/models.py у нас слишком много всего
-- разделение моделей по модулям
+- разделение моделей по модулям, как работает
 
 ### Прочее
 - [F](https://docs.djangoproject.com/en/3.2/ref/models/expressions/#django.db.models.F)
