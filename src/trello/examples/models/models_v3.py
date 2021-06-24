@@ -38,7 +38,7 @@ class Project(BaseModelMixin):
 
 
 class Column(BaseModelMixin):
-    title = models.CharField(max_length=256)
+    title = models.CharField(max_length=255)
     position = models.PositiveIntegerField(default=0)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
@@ -49,6 +49,20 @@ class Column(BaseModelMixin):
         ordering = ["position"]
 
 
+class TaskManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_archived=False)
+
+
+class ArchivedTaskManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_archived=True)
+
+
+class AllTaskManager(models.Manager):
+    use_in_migrations = True
+
+
 class Task(BaseModelMixin):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -56,6 +70,10 @@ class Task(BaseModelMixin):
     column = models.ForeignKey(Column, on_delete=models.CASCADE)
     estimated_time = models.FloatField(help_text="in hours", blank=True, null=True)
     is_archived = models.BooleanField(default=False)
+
+    objects = TaskManager()
+    archived_objects = ArchivedTaskManager()
+    all_objects = AllTaskManager()
 
     def __str__(self):
         return self.title
@@ -70,21 +88,3 @@ class TaskComment(BaseModelMixin):
 
     def __str__(self):
         return f"{self.text} ({self.task})"
-
-
-TaskChangelogType = [
-    ("title", "title"),
-    ("description", "description"),
-    ("column", "column"),
-    ("estimated_time", "estimated_time"),
-]
-
-
-class TaskChangelog(CreatedAtMixin, CreatedByMixin, models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    field = models.CharField(max_length=55, choices=TaskChangelogType)
-    old_value = models.TextField()
-    new_value = models.TextField()
-
-    def __str__(self):
-        return f"{self.task} ({self.field}: {self.old_value} -> {self.new_value})"

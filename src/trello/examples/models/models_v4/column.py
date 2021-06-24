@@ -5,7 +5,7 @@ from trello.models.project import Project
 
 
 class Column(BaseModelMixin):
-    title = models.CharField(max_length=256)
+    title = models.CharField(max_length=255)
     position = models.PositiveIntegerField(default=0)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 

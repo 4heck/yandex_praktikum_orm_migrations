@@ -3,7 +3,11 @@
 # Мы хотим создать побольше копий его и потом во всех сразу
 # заменить слово "часов" на "минут" ¯\_(ツ)_/¯
 
-from trello.models import Task, TaskComment, User
+from django.contrib.auth import get_user_model
+
+from trello.models import Task, TaskComment
+
+User = get_user_model()
 
 user = User.objects.all().first()
 task = Task.objects.all().first()

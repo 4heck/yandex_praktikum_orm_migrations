@@ -18,6 +18,10 @@ class ArchivedTaskManager(models.Manager):
         return super().get_queryset().filter(is_archived=True)
 
 
+class AllTaskManager(models.Manager):
+    use_in_migrations = True
+
+
 class Task(BaseModelMixin):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -28,7 +32,7 @@ class Task(BaseModelMixin):
 
     objects = TaskManager()
     archived_objects = ArchivedTaskManager()
-    all_objects = models.Manager()
+    all_objects = AllTaskManager()
 
     def __str__(self):
         return self.title
