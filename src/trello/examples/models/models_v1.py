@@ -6,7 +6,7 @@ User = get_user_model()
 
 class Project(models.Model):
     title = models.CharField(max_length=255)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -17,8 +17,8 @@ class Project(models.Model):
 class Column(models.Model):
     title = models.CharField(max_length=255)
     position = models.PositiveIntegerField(default=0)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="columns")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="columns")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -33,9 +33,9 @@ class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     position = models.PositiveIntegerField(default=0)
-    column = models.ForeignKey(Column, on_delete=models.CASCADE)
+    column = models.ForeignKey(Column, on_delete=models.CASCADE, related_name="tasks")
     estimated_time = models.FloatField(help_text="in hours", blank=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
