@@ -61,11 +61,3 @@ class Task(BaseModelMixin):
 
     class Meta:
         ordering = ["position"]
-
-
-class TaskComment(BaseModelMixin):
-    text = models.TextField()
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.text} ({self.task})"

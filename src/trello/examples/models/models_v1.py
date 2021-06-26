@@ -44,14 +44,3 @@ class Task(models.Model):
 
     class Meta:
         ordering = ["position"]
-
-
-class TaskComment(models.Model):
-    text = models.TextField()
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.text} ({self.task})"

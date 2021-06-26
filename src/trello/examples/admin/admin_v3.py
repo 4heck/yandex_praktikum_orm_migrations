@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from trello.models import Column, Project, Task, TaskComment
+from trello.models import Column, Project, Task
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -17,4 +17,3 @@ class TaskAdmin(admin.ModelAdmin):
 admin.site.register(Project)
 admin.site.register(Column)
 admin.site.register(Task, TaskAdmin)
-admin.site.register(TaskComment)

@@ -32,16 +32,6 @@ CREATE TABLE IF NOT EXISTS "trello_task"
     "created_by_id"  integer          NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED
 );
 
-CREATE TABLE IF NOT EXISTS "trello_taskcomment"
-(
-    "id"            integer  NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "created_at"    datetime NOT NULL,
-    "modified_at"   datetime NOT NULL,
-    "text"          text     NOT NULL,
-    "created_by_id" integer  NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "task_id"       integer  NOT NULL REFERENCES "trello_task" ("id") DEFERRABLE INITIALLY DEFERRED
-);
-
 CREATE TABLE IF NOT EXISTS "trello_taskchangelog"
 (
     "id"            integer     NOT NULL PRIMARY KEY AUTOINCREMENT,

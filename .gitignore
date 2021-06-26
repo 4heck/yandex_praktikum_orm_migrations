@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 .idea/
 **/__pycache__
+/~$presentation.pptx
