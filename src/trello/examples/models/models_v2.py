@@ -40,7 +40,7 @@ class Project(BaseModelMixin):
 class Column(BaseModelMixin):
     title = models.CharField(max_length=255)
     position = models.PositiveIntegerField(default=0)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="columns")
 
     def __str__(self):
         return f"{self.title} ({self.project})"
@@ -53,7 +53,7 @@ class Task(BaseModelMixin):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     position = models.PositiveIntegerField(default=0)
-    column = models.ForeignKey(Column, on_delete=models.CASCADE)
+    column = models.ForeignKey(Column, on_delete=models.CASCADE, related_name="tasks")
     estimated_time = models.FloatField(help_text="in hours", blank=True, null=True)
 
     def __str__(self):

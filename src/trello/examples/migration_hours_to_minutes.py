@@ -15,7 +15,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            convert_estimated_time_from_hours_to_minutes, migrations.RunPython.noop
-        ),
+        migrations.RunPython(convert_estimated_time_from_hours_to_minutes, migrations.RunPython.noop),
     ]

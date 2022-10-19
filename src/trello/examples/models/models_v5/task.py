@@ -26,7 +26,7 @@ class Task(BaseModelMixin):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     position = models.PositiveIntegerField(default=0)
-    column = models.ForeignKey(Column, on_delete=models.CASCADE)
+    column = models.ForeignKey(Column, on_delete=models.CASCADE, related_name="tasks")
     estimated_time = models.FloatField(help_text="in minutes", blank=True, null=True)
     is_archived = models.BooleanField(default=False)
 
