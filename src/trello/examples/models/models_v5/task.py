@@ -1,3 +1,5 @@
+from email.policy import default
+from math import fabs
 from crum import get_current_user
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -40,11 +42,13 @@ class Task(BaseModelMixin):
     def __init__(self, *args, **kwargs):
         super(Task, self).__init__(*args, **kwargs)
         for field, _ in TaskChangelogType:
-            setattr(self, f"old_{field}", getattr(self, field))
+            if hasattr(self, field):
+                setattr(self, f"old_{field}", getattr(self, field))
 
     def save(self, *args, **kwargs):
         super(Task, self).save(*args, **kwargs)
-        self.handle_changelog()
+        if hasattr(self, 'old_column'):
+            self.handle_changelog()
 
     def handle_changelog(self):
         created_by = get_current_user()
@@ -73,14 +77,16 @@ TaskChangelogType = [
     ("description", "description"),
     ("column", "column"),
     ("estimated_time", "estimated_time"),
+    ("position", "position"),
+    ("is_archived", "is_archived"),
 ]
 
 
 class TaskChangelog(CreatedAtMixin, CreatedByMixin, models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     field = models.CharField(max_length=55, choices=TaskChangelogType)
-    old_value = models.TextField()
-    new_value = models.TextField()
+    old_value = models.TextField(null=True)
+    new_value = models.TextField(null=True)
 
     def __str__(self):
         return f"{self.task} ({self.field}: {self.old_value} -> {self.new_value})"
